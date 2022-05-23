@@ -111,3 +111,41 @@ Not only were web servers taken offline by a DDOS attack, but upload and downloa
 ![Setting an Alert](Images/setting_alert.png) 
 
 ![Critical Alert](Images/alert_active.png)
+
+---
+
+### Step 3: Drawing the (base)line
+
+**Background:**  A Vandaly server is also experiencing brute force attacks into their administrator account. Management would like you to set up monitoring to notify the SOC team if a brute force attack occurs again.
+
+
+**Task:** Analyze administrator logs that document a brute force attack. Then, create a baseline of the ordinary amount of administrator bad logins and determine a threshold to indicate if a brute force attack is occurring.
+
+1. Upload the administrator login logs.
+   - [Admin Logins](resources/Administrator_logs.csv)
+
+2. When did the brute force attack occur?
+   - Hints:
+     - Look for the `name` field to find failed logins.
+     - Note the attack lasted several hours.
+
+      
+3. Determine a baseline of normal activity and a threshold that would alert if a brute force attack is occurring.
+
+> By examining the `'name'` field for `"An account failed to log on"` I was able to determine the time of the attack, the baseline and the threshold...
+
+> The brute force attack occurred from `9:00 a.m. until 2:00 p.m. on 2/21/2020` for a total of `5 hours`.
+
+> Based on the logs, the the baseline is `5 to 35` logs an hour. The threshold will be set at `40 or more login attempts` in an hour and the alert will be sent to `SOC@vandalay.com` when triggered.
+
+![Brute Force](Images/Brute_Force.png)
+
+4. Design an alert to check the threshold every hour and email the SOC team at SOC@vandalay.com if triggered. 
+
+![Brute Force](Images/Brute_force_alert.png)
+
+Submit the answers to the questions about the brute force timing, baseline and threshold. Additionally, provide a screenshot as proof that the alert has been created.
+ 
+---
+
+© 2020 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
