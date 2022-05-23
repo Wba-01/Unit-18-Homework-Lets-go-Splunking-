@@ -63,3 +63,51 @@ Not only were web servers taken offline by a DDOS attack, but upload and downloa
     - `ratio`
   
    Hint: Use the following format when for the `table` command: `| table fieldA  fieldB fieldC`
+
+   4. Answer the following questions:
+
+> EVAL Command:
+
+`source="server_speedtest.csv" | eval ratio='DOWNLOAD_MEGABITS'/'UPLOAD_MEGABITS'`
+
+![EVAL Image](Images/eval.png)
+
+
+  - Based on the report created, what is the approximate date and time of the attack?
+
+> Answer: The attack took place on `02/22/2020` at `11:30`, where the download speed dropped dramatically down from `109.16 Mbps` to `7.87 Mbps` and it lasted till `02/23/2020` at `23:30`, where the speed returned to normal over `122.91 Mbps`.
+
+![Downtime](Images/chart.png)
+
+- How long did it take your systems to recover?
+
+> Answer: It took the system a total of `24 hours` to recover.  
+
+---
+
+### Step 2: Are We Vulnerable? 
+
+**Background:**  Due to the frequency of attacks, your manager needs to be sure that sensitive customer data on their servers is not vulnerable. Since Vandalay uses Nessus vulnerability scanners, you have pulled the last 24 hours of scans to see if there are any critical vulnerabilities.
+
+  - For more information on Nessus, read the following link: https://www.tenable.com/products/nessus
+
+**Task:** Create a report determining how many critical vulnerabilities exist on the customer data server. Then, build an alert to notify your team if a critical vulnerability reappears on this server.
+
+1. Upload the following file from the Nessus vulnerability scan.
+   - [Nessus Scan Results](resources/nessus_logs.csv)
+
+2. Create a report that shows the `count` of critical vulnerabilities from the customer database server.
+   - The database server IP is `10.11.36.23`.
+   - The field that identifies the level of vulnerabilities is `severity`.
+
+> Answer: The Query Command:
+
+- `source="nessus_logs.csv" dest_ip="10.11.36.23" | eval CRITICAL=IF(severity="critical", "Critical", "Non-Critical") | stats count by CRITICAL`
+
+![Critical Query](Images/severity.png)
+
+3. Build an alert that monitors every day to see if this server has any critical vulnerabilities. If a vulnerability exists, have an alert emailed to `soc@vandalay.com`.
+
+![Setting an Alert](Images/setting_alert.png) 
+
+![Critical Alert](Images/alert_active.png)
